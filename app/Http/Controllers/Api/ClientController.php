@@ -59,7 +59,7 @@ class ClientController extends Controller
             // }])->where('role', 'client')->get();
 
         } catch (Exception $e)
-        {
+        {    
             $clients = $e->getMessage();
         }
         return response()->json([
@@ -81,7 +81,9 @@ class ClientController extends Controller
                 'role' => 'client',
             ];
             $client = User::create($data);     
-            $date_bought = Carbon::parse($request->date_bought)->format('Y-m-d H:i:s');
+            $dateb = Carbon::parse($request->date_bought);
+            $date = $dateb->addDay();
+            $date_bought = $date->format('Y-m-d H:i:s');
             $contact = Contact::create([
                 'user_id' => $client->id,
                 'block' => $request->block,
